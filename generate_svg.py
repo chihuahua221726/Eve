@@ -25,12 +25,12 @@ def build_svg() -> str:
     report = eve.build_report()
     lines = report.splitlines()
 
-    y = 80
+    y = 190
     text_nodes = []
     for line in lines:
         name, _, eves = line.partition(" Is In ")
         text_nodes.append(
-            f'<text x="40" y="{y}" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">{html.escape(name)} Is In</text>'
+            f'<text x="40" y="{y}" font-family="Segoe UI, sans-serif" font-size="18" fill="#52634b" font-weight="bold">{html.escape(name)} Is In</text>'
         )
         y += 24
         words = eves.split()
@@ -40,13 +40,13 @@ def build_svg() -> str:
             chunk.append(w)
             if len(" ".join(chunk)) > 95:
                 text_nodes.append(
-                    f'<text x="60" y="{cur_y}" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">{html.escape(" ".join(chunk))}</text>'
+                    f'<text x="60" y="{cur_y}" font-family="Consolas, monospace" font-size="11" fill="#796b5a">{html.escape(" ".join(chunk))}</text>'
                 )
                 chunk = []
                 cur_y += 14
         if chunk:
             text_nodes.append(
-                f'<text x="60" y="{cur_y}" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">{html.escape(" ".join(chunk))}</text>'
+                f'<text x="60" y="{cur_y}" font-family="Consolas, monospace" font-size="11" fill="#796b5a">{html.escape(" ".join(chunk))}</text>'
             )
             cur_y += 14
         y = cur_y + 16
@@ -59,13 +59,24 @@ def build_svg() -> str:
   <title>Eve - Holidays in Eves</title>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#1a2340"/>
-      <stop offset="100%" stop-color="#0b0f1a"/>
+      <stop offset="0%" stop-color="#fffaf0"/>
+      <stop offset="100%" stop-color="#f5efe3"/>
     </linearGradient>
   </defs>
   <rect width="100%" height="100%" fill="url(#bg)"/>
-  <text x="40" y="40" font-family="Segoe UI, sans-serif" font-size="28" fill="#ffffff" font-weight="bold">EVE</text>
-  <text x="40" y="62" font-family="Segoe UI, sans-serif" font-size="13" fill="#9aa4bf">All the holidays, but days away are shown as that many eves.</text>
+  <text x="40" y="48" font-family="Georgia, serif" font-size="34" fill="#34291f" font-weight="bold">EVE</text>
+  <text x="40" y="76" font-family="Segoe UI, sans-serif" font-size="13" fill="#796b5a">Every holiday is a little reason to gather around the table.</text>
+  <g transform="translate(790 12) scale(.72)">
+    <path d="M25 82 110 18l85 64v71H25z" fill="#c98255"/>
+    <path d="m15 84 95-72 95 72-9 12-86-65-86 65z" fill="#754536"/>
+    <path d="M89 96h42v57H89z" fill="#70513d"/>
+    <circle cx="121" cy="126" r="2.5" fill="#f3d28a"/>
+    <path d="M43 98h29v30H43zM148 98h29v30h-29z" fill="#f4d38b"/>
+    <path d="M57 98v30m-14-15h29m90-15v30m-14-15h29" stroke="#fff4d9" stroke-width="4"/>
+    <path d="M100 45h20V20h-20z" fill="#754536"/>
+    <path d="M16 154h188" stroke="#52634b" stroke-width="7" stroke-linecap="round"/>
+    <path d="M36 153q0-20 13-27 13 7 13 27m94 0q0-20 13-27 13 7 13 27" fill="#71815b"/>
+  </g>
   {chr(10).join(text_nodes)}
 </svg>
 '''

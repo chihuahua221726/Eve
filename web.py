@@ -19,9 +19,9 @@ def render_page(today=None):
         countdown = "Today" if days == 0 else f"In {days} Eves"
         cards.append(
             "<article class=\"holiday\">"
-            f"<div><h2>{escape(name)}</h2>"
+            f"<div class=\"holiday-copy\"><h2>{escape(name)}</h2>"
             f"<p>{holiday_date.strftime('%A, %B')} {holiday_date.day}</p></div>"
-            f"<span class=\"countdown\">{escape(countdown)}</span>"
+            f"<span class=\"countdown\">{escape(countdown)}<small>until the celebration</small></span>"
             "</article>"
         )
 
@@ -30,36 +30,72 @@ def render_page(today=None):
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Eve | Holiday countdown</title>
+  <title>Eve | A cozy holiday countdown</title>
   <style>
-    :root {{ color-scheme: light; font-family: system-ui, sans-serif; }}
-    body {{ margin: 0; background: #f5f2eb; color: #24231f; }}
-    main {{ max-width: 760px; margin: 0 auto; padding: 3rem 1.25rem; }}
-    header {{ margin-bottom: 2rem; }}
-    h1 {{ margin: 0; font-size: clamp(2.5rem, 8vw, 4rem); letter-spacing: -.06em; }}
-    header p {{ color: #68645b; font-size: 1.1rem; }}
+    :root {{ color-scheme: light; font-family: "Segoe UI", system-ui, sans-serif;
+      --paper: #fffdf8; --ink: #34291f; --muted: #796b5a; --green: #52634b;
+      --rust: #a64f32; }}
+    * {{ box-sizing: border-box; }}
+    body {{ margin: 0; color: var(--ink); background:
+      radial-gradient(ellipse at 50% 0%, #fffaf0 0%, transparent 58%), #f5efe3; }}
+    header {{ min-height: 490px; padding: 3rem 1.25rem 4rem; display: grid;
+      place-content: center; justify-items: center; text-align: center;
+      background: linear-gradient(180deg, transparent 78%, #f5efe3); }}
+    .eyebrow {{ color: var(--green); font-size: .78rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase; }}
+    .cottage {{ display: block; width: clamp(150px, 27vw, 210px); margin: 1rem auto .3rem;
+      filter: drop-shadow(0 12px 10px rgba(79, 56, 35, .13)); }}
+    h1 {{ margin: 0; color: var(--ink); font: 700 clamp(3.2rem, 10vw, 6rem)/.95 Georgia, serif;
+      letter-spacing: .08em; }}
+    header p {{ max-width: 36rem; margin: .8rem auto 0; color: var(--muted);
+      font-size: 1.05rem; line-height: 1.6; }}
+    main {{ max-width: 820px; margin: -1rem auto 0; padding: 1rem 1.25rem 4rem; }}
+    .list-intro {{ margin-bottom: 1.2rem; }}
+    .list-intro h2 {{ margin: 0; font: 700 clamp(1.7rem, 5vw, 2.3rem)/1.1 Georgia, serif; }}
+    .list-intro p {{ margin: .5rem 0 0; color: var(--muted); font-size: .9rem; }}
     .holiday {{ display: flex; align-items: center; justify-content: space-between;
-      gap: 1rem; padding: 1rem 1.2rem; margin: .7rem 0; background: white;
-      border: 1px solid #e8e3d9; border-radius: 14px; }}
-    h2 {{ margin: 0; font-size: 1.05rem; }}
-    .holiday p {{ margin: .35rem 0 0; color: #777267; font-size: .9rem; }}
-    .countdown {{ flex: 0 0 auto; max-width: 52%; color: #7454bd; font-weight: 700;
-      overflow-wrap: anywhere; text-align: right; }}
+      gap: 1rem; margin: .75rem 0; padding: 1.15rem 1.3rem;
+      background: var(--paper); border: 1px solid #e8dece; border-radius: 16px;
+      box-shadow: 0 4px 14px rgba(79, 56, 35, .045); }}
+    h2 {{ margin: 0; }}
+    .holiday-copy h2 {{ font: 600 1.05rem/1.35 "Segoe UI", system-ui, sans-serif; }}
+    .holiday p {{ margin: .35rem 0 0; color: var(--muted); font-size: .9rem; }}
+    .countdown {{ display: grid; flex: 0 0 auto; gap: .25rem; color: var(--rust);
+      font-weight: 700; text-align: right; }}
+    .countdown small {{ color: var(--green); font-size: .74rem; font-weight: 500; }}
+    footer {{ padding: 1rem 1rem 3rem; color: var(--muted); text-align: center; font-size: .85rem; }}
     @media (max-width: 520px) {{
-      main {{ padding-top: 2rem; }}
+      header {{ min-height: 440px; }}
       .holiday {{ align-items: flex-start; flex-direction: column; }}
-      .countdown {{ max-width: 100%; text-align: left; }}
+      .countdown {{ text-align: left; }}
     }}
   </style>
 </head>
 <body>
-  <main>
-    <header>
+  <header>
+      <div class="eyebrow">A cozy place for what's coming</div>
+      <svg class="cottage" viewBox="0 0 220 170" role="img" aria-label="A cozy little cottage">
+        <path d="M25 82 110 18l85 64v71H25z" fill="#c98255"/>
+        <path d="m15 84 95-72 95 72-9 12-86-65-86 65z" fill="#754536"/>
+        <path d="M89 96h42v57H89z" fill="#70513d"/>
+        <circle cx="121" cy="126" r="2.5" fill="#f3d28a"/>
+        <path d="M43 98h29v30H43zM148 98h29v30h-29z" fill="#f4d38b"/>
+        <path d="M57 98v30m-14-15h29m90-15v30m-14-15h29" stroke="#fff4d9" stroke-width="4"/>
+        <path d="M100 45h20V20h-20z" fill="#754536"/>
+        <path d="M16 154h188" stroke="#52634b" stroke-width="7" stroke-linecap="round"/>
+        <path d="M36 153q0-20 13-27 13 7 13 27m94 0q0-20 13-27 13 7 13 27" fill="#71815b"/>
+      </svg>
       <h1>Eve</h1>
-      <p>Every holiday, counted down in Eves.</p>
-    </header>
+      <p>Every holiday is a little reason to gather around the table.</p>
+  </header>
+  <main>
+    <div class="list-intro">
+      <h2>Coming home soon</h2>
+      <p>One eve for every day until the celebration.</p>
+    </div>
     {''.join(cards)}
   </main>
+  <footer>Save a seat. The next celebration is on its way.</footer>
 </body>
 </html>"""
 
