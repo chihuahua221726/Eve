@@ -62,17 +62,18 @@ def build_svg() -> str:
     if os.path.exists(html_path):
         with open(html_path, "r", encoding="utf-8") as f:
             html_content = f.read()
+    # Make it XML-compatible for embedding in foreignObject.
+    html_content = html_content.replace("<!DOCTYPE html>", "").strip()
+    if html_content.lower().startswith("<?xml"):
+        html_content = html_content.split("?>", 1)[-1].strip()
 
     svg = f'''<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xhtml="http://www.w3.org/1999/xhtml"
-     width="1000" height="{height}" viewBox="0 0 1000 {height}">
+     width="100%" height="100%" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
   <title>Eve - Holidays in Eves</title>
   <rect width="100%" height="100%" fill="#0b0f1a"/>
-  <text x="40" y="40" font-family="Segoe UI, sans-serif" font-size="28" fill="#ffffff" font-weight="bold">EVE</text>
-  <text x="40" y="62" font-family="Segoe UI, sans-serif" font-size="13" fill="#9aa4bf">All the holidays, but days away are shown as that many eves.</text>
-  {chr(10).join(text_nodes)}
-  <foreignObject x="0" y="{height - 1}" width="1" height="1">
-    <xhtml:div style="display:none">{html.escape(html_content)}</xhtml:div>
+  <foreignObject x="0" y="0" width="100%" height="100%">
+    <xhtml:div style="width:100%;height:100%;overflow:auto;">{html_content}</xhtml:div>
   </foreignObject>
 </svg>
 '''
