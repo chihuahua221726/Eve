@@ -22,13 +22,11 @@ def build_svg() -> str:
     eve = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(eve)
 
-    report = eve.build_report()
-    lines = report.splitlines()
+    entries = eve.read_eve_output()
 
     y = 190
     text_nodes = []
-    for line in lines:
-        name, _, eves = line.partition(" Is In ")
+    for name, eves in entries:
         text_nodes.append(
             f'<text x="40" y="{y}" font-family="Segoe UI, sans-serif" font-size="18" fill="#52634b" font-weight="bold">{html.escape(name)} Is In</text>'
         )

@@ -4,24 +4,31 @@ import argparse
 import datetime as dt
 from html import escape
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
 
-from eve import HOLIDAYS, days_until, next_occurrence
+from eve import HOLIDAYS, next_occurrence, read_eve_output
 
 
 def render_page(today=None):
     if today is None:
         today = dt.date.today()
 
+    holiday_dates = dict(HOLIDAYS)
     cards = []
-    for name, date_fn in HOLIDAYS:
+    for name, eves in read_eve_output():
+        date_fn = holiday_dates.get(name)
+        if date_fn is None:
+            raise ValueError(f"Unknown holiday in eve_output.txt: {name}")
         holiday_date = next_occurrence(date_fn, today)
-        days = days_until(holiday_date, today)
-        countdown = "Today" if days == 0 else f"In {days} Eves"
+        eve_count = len(eves.split())
+        countdown = "Today" if eve_count == 0 else f"In {eve_count} Eves"
         cards.append(
             "<article class=\"holiday\">"
             f"<div class=\"holiday-copy\"><h2>{escape(name)}</h2>"
             f"<p>{holiday_date.strftime('%A, %B')} {holiday_date.day}</p></div>"
-            f"<span class=\"countdown\">{escape(countdown)}<small>until the celebration</small></span>"
+            f"<div class=\"countdown\">{escape(countdown)}"
+            "<small>until the celebration</small>"
+            f"<span class=\"eves\">{escape(eves)}</span></div>"
             "</article>"
         )
 
@@ -63,11 +70,14 @@ def render_page(today=None):
     .countdown {{ display: grid; flex: 0 0 auto; gap: .25rem; color: var(--rust);
       font-weight: 700; text-align: right; }}
     .countdown small {{ color: var(--green); font-size: .74rem; font-weight: 500; }}
+    .eves {{ max-width: 32rem; color: var(--muted); font-size: .72rem;
+      font-weight: 400; line-height: 1.5; overflow-wrap: anywhere; }}
     footer {{ padding: 1rem 1rem 3rem; color: var(--muted); text-align: center; font-size: .85rem; }}
     @media (max-width: 520px) {{
       header {{ min-height: 440px; }}
       .holiday {{ align-items: flex-start; flex-direction: column; }}
       .countdown {{ text-align: left; }}
+      .eves {{ max-width: 100%; }}
     }}
   </style>
 </head>
@@ -102,6 +112,22 @@ def render_page(today=None):
 
 class EveHandler(BaseHTTPRequestHandler):
     def do_GET(self):
+        if self.path == "/eve_output.txt":
+            content = Path(__file__).with_name("eve_output.txt").read_bytes()
+            self.send_response(200)
+            self.send_header("Content-Type", "text/plain; charset=utf-16le")
+            self.send_header("Content-Length", str(len(content)))
+            self.end_headers()
+            self.wfile.write(content)
+            return
+        if self.path == "/index.html":
+            content = Path(__file__).with_name("index.html").read_bytes()
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(content)))
+            self.end_headers()
+            self.wfile.write(content)
+            return
         if self.path != "/":
             self.send_error(404)
             return
