@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xhtml="http://www.w3.org/1999/xhtml"
+     width="100%" height="100%" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+  <title>Eve - Holidays in Eves</title>
+  <rect width="100%" height="100%" fill="#0b0f1a"/>
+  <foreignObject x="0" y="0" width="100%" height="100%">
+    <xhtml:div style="width:100%;height:100%;overflow:auto;"><html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eve — Holidays in Eves</title>
+<style>
+  :root {
+    --bg: #0b0f1a;
+    --fg: #e8ecf4;
+    --accent: #7aa2ff;
+    --muted: #9aa4bf;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    background: radial-gradient(1200px 600px at 50% -10%, #1a2340, var(--bg));
+    color: var(--fg);
+    min-height: 100vh;
+  }
+  header.hero {
+    position: relative;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+  header.hero .content {
+    transition: opacity 0.1s linear, transform 0.1s linear;
+    will-change: opacity, transform;
+  }
+  header.hero h1 {
+    font-size: clamp(3rem, 10vw, 7rem);
+    margin: 0;
+    letter-spacing: 0.08em;
+    background: linear-gradient(180deg, #fff, var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  header.hero p {
+    color: var(--muted);
+    font-size: 1.1rem;
+    max-width: 60ch;
+    margin: 1rem auto 0;
+  }
+  .fade-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 0%, var(--bg) 100%);
+    pointer-events: none;
+  }
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 6rem;
+  }
+  .holiday {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .holiday.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .holiday .name {
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .holiday .eves {
+    display: block;
+    margin-top: 0.5rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    word-break: break-word;
+  }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    padding: 2rem;
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+  <header class="hero" id="hero">
+    <div class="content">
+      <h1>EVE</h1>
+      <p>All the holidays, but the number of days away is shown as that many "eve"s.</p>
+    </div>
+    <div class="fade-overlay"></div>
+  </header>
+
+  <main id="list"></main>
+
+  <footer>For one day away is one eve.</footer>
+
+<script>
+  // Holiday data: name + days away (computed for today's date at generation).
+  const holidays = [
+    ["New Year's Day", 58],
+    ["Martin Luther King Jr. Day", 72],
+    ["Valentine's Day", 103],
+    ["Presidents' Day", 106],
+    ["St. Patrick's Day", 134],
+    ["Easter", 150],
+    ["Mother's Day", 183],
+    ["Memorial Day", 204],
+    ["Juneteenth", 228],
+    ["Father's Day", 232],
+    ["Independence Day", 243],
+    ["Labor Day", 302],
+    ["Halloween", 362],
+    ["Veterans Day", 373],
+    ["Thanksgiving", 386],
+    ["Christmas Eve", 406],
+    ["Christmas Day", 407],
+    ["New Year's Eve", 58]
+  ];
+
+  const list = document.getElementById('list');
+  holidays.forEach(([name, days]) => {
+    const div = document.createElement('div');
+    div.className = 'holiday';
+    const eves = Array(days).fill('eve').join(' ');
+    div.innerHTML = `<span class="name">${name} Is In</span><span class="eves">${eves}</span>`;
+    list.appendChild(div);
+  });
+
+  // Fade the top hero away as you scroll.
+  const hero = document.getElementById('hero');
+  const heroContent = hero.querySelector('.content');
+  function onScroll() {
+    const y = window.scrollY;
+    const limit = hero.offsetHeight;
+    const progress = Math.min(y / limit, 1);
+    heroContent.style.opacity = 1 - progress;
+    heroContent.style.transform = `translateY(${-progress * 60}px) scale(${1 - progress * 0.15})`;
+    hero.style.opacity = 1 - progress * 0.6;
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Reveal holidays on scroll.
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.holiday').forEach(el => io.observe(el));
+</script>
+</body>
+</html></xhtml:div>
+  </foreignObject>
+</svg>
