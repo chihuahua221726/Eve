@@ -190,38 +190,7 @@
   <footer>Save a seat. The next celebration is on its way.</footer>
 
 <script>
-  // Holiday data: name + days away (computed for today's date at generation).
-  const holidays = [
-    ["New Year's Day", 58],
-    ["Martin Luther King Jr. Day", 72],
-    ["Valentine's Day", 103],
-    ["Presidents' Day", 106],
-    ["St. Patrick's Day", 134],
-    ["Easter", 150],
-    ["Mother's Day", 183],
-    ["Memorial Day", 204],
-    ["Juneteenth", 228],
-    ["Father's Day", 232],
-    ["Independence Day", 243],
-    ["Labor Day", 302],
-    ["Halloween", 362],
-    ["Veterans Day", 373],
-    ["Thanksgiving", 386],
-    ["Christmas Eve", 406],
-    ["Christmas Day", 407],
-    ["New Year's Eve", 58]
-  ];
-
   const list = document.getElementById('list');
-  holidays.forEach(([name, days]) => {
-    const div = document.createElement('div');
-    div.className = 'holiday';
-    const eves = Array(days).fill('eve').join(' ');
-    div.innerHTML = `<span class="name">${name} Is In</span><span class="eves">${eves}</span>`;
-    list.appendChild(div);
-  });
-
-  // Fade the top hero away as you scroll.
   const hero = document.getElementById('hero');
   const heroContent = hero.querySelector('.content');
   function onScroll() {
@@ -235,11 +204,48 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // Reveal holidays on scroll.
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.holiday').forEach(el => io.observe(el));
+  async function loadHolidays() {
+    const response = await fetch('eve_output.txt');
+    if (!response.ok) {
+      throw new Error(`Could not load eve_output.txt (${response.status})`);
+    }
+
+    const report = new TextDecoder('utf-16').decode(await response.arrayBuffer());
+    const holidays = report.trimEnd().split(/\r?\n/).map((line, index) => {
+      const separator = line.indexOf(' Is In ');
+      if (separator < 0) {
+        throw new Error(`Invalid eve_output.txt line ${index + 1}`);
+      }
+      return [line.slice(0, separator), line.slice(separator + 7)];
+    });
+
+    holidays.forEach(([name, eves]) => {
+      const card = document.createElement('article');
+      card.className = 'holiday';
+      const title = document.createElement('span');
+      title.className = 'name';
+      title.textContent = `${name} Is In`;
+      const countdown = document.createElement('span');
+      countdown.className = 'eves';
+      countdown.textContent = eves;
+      card.append(title, countdown);
+      list.appendChild(card);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.holiday').forEach(card => observer.observe(card));
+  }
+
+  loadHolidays().catch((error) => {
+    const message = document.createElement('p');
+    message.setAttribute('role', 'alert');
+    message.textContent = `The holiday list could not be loaded: ${error.message}`;
+    list.replaceChildren(message);
+  });
 </script>
 </body>
 </html>

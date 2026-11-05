@@ -11,6 +11,7 @@ python main.py --date 2026-12-01
 ```
 
 See `eve_output.txt` for a generated example.
+The web pages and generated SVG use its repeated Eve strings as their countdown content.
 
 ## Web app
 

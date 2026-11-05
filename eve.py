@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import calendar
 import datetime as dt
+from pathlib import Path
 from typing import Callable, List, Tuple
 
 Holiday = Tuple[str, Callable[[int], dt.date]]
@@ -101,6 +102,20 @@ def build_report(today=None, eve_word="Eve"):
         eves = eve_string(d, eve_word)
         lines.append(f"{name} Is In {eves}")
     return "\n".join(lines)
+
+
+def read_eve_output() -> List[Tuple[str, str]]:
+    output_path = Path(__file__).with_name("eve_output.txt")
+    with output_path.open(encoding="utf-16") as output_file:
+        lines = output_file.read().splitlines()
+
+    entries = []
+    for line_number, line in enumerate(lines, start=1):
+        name, separator, eves = line.partition(" Is In ")
+        if not separator:
+            raise ValueError(f"Invalid Eve output on line {line_number}")
+        entries.append((name, eves))
+    return entries
 
 
 def main():
