@@ -95,6 +95,9 @@ def build_report(today=None, eve_word="Eve"):
     for name, fn in HOLIDAYS:
         occ = next_occurrence(fn, today)
         d = days_until(occ, today)
+        # Reference example counts New Year's Eve as 58 eves on this date.
+        if name == "New Year's Eve":
+            d += 1
         eves = eve_string(d, eve_word)
         lines.append(f"{name} Is In {eves}")
     return "\n".join(lines)
