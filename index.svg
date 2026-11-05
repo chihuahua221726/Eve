@@ -1,165 +1,145 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xhtml="http://www.w3.org/1999/xhtml"
-     width="100%" height="100%" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="100%" height="100%" viewBox="0 0 1000 2422" preserveAspectRatio="xMidYMid meet">
   <title>Eve - Holidays in Eves</title>
-  <rect width="100%" height="100%" fill="#0b0f1a"/>
-  <foreignObject x="0" y="0" width="100%" height="100%">
-    <xhtml:div style="width:100%;height:100%;overflow:auto;"><html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Eve — Holidays in Eves</title>
-<style>
-  :root {
-    --bg: #0b0f1a;
-    --fg: #e8ecf4;
-    --accent: #7aa2ff;
-    --muted: #9aa4bf;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: "Segoe UI", system-ui, sans-serif;
-    background: radial-gradient(1200px 600px at 50% -10%, #1a2340, var(--bg));
-    color: var(--fg);
-    min-height: 100vh;
-  }
-  header.hero {
-    position: relative;
-    height: 60vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    overflow: hidden;
-  }
-  header.hero .content {
-    transition: opacity 0.1s linear, transform 0.1s linear;
-    will-change: opacity, transform;
-  }
-  header.hero h1 {
-    font-size: clamp(3rem, 10vw, 7rem);
-    margin: 0;
-    letter-spacing: 0.08em;
-    background: linear-gradient(180deg, #fff, var(--accent));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  header.hero p {
-    color: var(--muted);
-    font-size: 1.1rem;
-    max-width: 60ch;
-    margin: 1rem auto 0;
-  }
-  .fade-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 0%, var(--bg) 100%);
-    pointer-events: none;
-  }
-  main {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem 6rem;
-  }
-  .holiday {
-    padding: 1.25rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .holiday.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .holiday .name {
-    font-weight: 600;
-    color: var(--accent);
-  }
-  .holiday .eves {
-    display: block;
-    margin-top: 0.5rem;
-    color: var(--muted);
-    font-size: 0.85rem;
-    line-height: 1.6;
-    word-break: break-word;
-  }
-  footer {
-    text-align: center;
-    color: var(--muted);
-    padding: 2rem;
-    font-size: 0.85rem;
-  }
-</style>
-</head>
-<body>
-  <header class="hero" id="hero">
-    <div class="content">
-      <h1>EVE</h1>
-      <p>All the holidays, but the number of days away is shown as that many "eve"s.</p>
-    </div>
-    <div class="fade-overlay"></div>
-  </header>
-
-  <main id="list"></main>
-
-  <footer>For one day away is one eve.</footer>
-
-<script>
-  // Holiday data: name + days away (computed for today's date at generation).
-  const holidays = [
-    ["New Year's Day", 58],
-    ["Martin Luther King Jr. Day", 72],
-    ["Valentine's Day", 103],
-    ["Presidents' Day", 106],
-    ["St. Patrick's Day", 134],
-    ["Easter", 150],
-    ["Mother's Day", 183],
-    ["Memorial Day", 204],
-    ["Juneteenth", 228],
-    ["Father's Day", 232],
-    ["Independence Day", 243],
-    ["Labor Day", 302],
-    ["Halloween", 362],
-    ["Veterans Day", 373],
-    ["Thanksgiving", 386],
-    ["Christmas Eve", 406],
-    ["Christmas Day", 407],
-    ["New Year's Eve", 58]
-  ];
-
-  const list = document.getElementById('list');
-  holidays.forEach(([name, days]) => {
-    const div = document.createElement('div');
-    div.className = 'holiday';
-    const eves = Array(days).fill('eve').join(' ');
-    div.innerHTML = `<span class="name">${name} Is In</span><span class="eves">${eves}</span>`;
-    list.appendChild(div);
-  });
-
-  // Fade the top hero away as you scroll.
-  const hero = document.getElementById('hero');
-  const heroContent = hero.querySelector('.content');
-  function onScroll() {
-    const y = window.scrollY;
-    const limit = hero.offsetHeight;
-    const progress = Math.min(y / limit, 1);
-    heroContent.style.opacity = 1 - progress;
-    heroContent.style.transform = `translateY(${-progress * 60}px) scale(${1 - progress * 0.15})`;
-    hero.style.opacity = 1 - progress * 0.6;
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-
-  // Reveal holidays on scroll.
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.holiday').forEach(el => io.observe(el));
-</script>
-</body>
-</html></xhtml:div>
-  </foreignObject>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a2340"/>
+      <stop offset="100%" stop-color="#0b0f1a"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bg)"/>
+  <text x="40" y="40" font-family="Segoe UI, sans-serif" font-size="28" fill="#ffffff" font-weight="bold">EVE</text>
+  <text x="40" y="62" font-family="Segoe UI, sans-serif" font-size="13" fill="#9aa4bf">All the holidays, but days away are shown as that many eves.</text>
+  <text x="40" y="80" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">New Year&#x27;s Day Is In</text>
+<text x="60" y="104" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="118" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="132" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve</text>
+<text x="40" y="162" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">Martin Luther King Jr. Day Is In</text>
+<text x="60" y="186" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="200" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="214" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="40" y="244" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">Valentine&#x27;s Day Is In</text>
+<text x="60" y="268" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="282" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="296" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="310" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="324" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve</text>
+<text x="40" y="354" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">Presidents&#x27; Day Is In</text>
+<text x="60" y="378" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="392" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="406" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="420" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="434" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve</text>
+<text x="40" y="464" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">St. Patrick&#x27;s Day Is In</text>
+<text x="60" y="488" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="502" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="516" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="530" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="544" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="558" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve</text>
+<text x="40" y="588" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">Easter Is In</text>
+<text x="60" y="612" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="626" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="640" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="654" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="668" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="682" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="40" y="712" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">Mother&#x27;s Day Is In</text>
+<text x="60" y="736" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="750" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="764" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="778" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="792" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="806" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="820" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="834" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="40" y="864" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">Memorial Day Is In</text>
+<text x="60" y="888" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="902" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="916" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="930" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="944" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="958" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="972" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="986" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1000" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve</text>
+<text x="40" y="1030" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">Juneteenth Is In</text>
+<text x="60" y="1054" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1068" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1082" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1096" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1110" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1124" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1138" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1152" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1166" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1180" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve</text>
+<text x="40" y="1210" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">Father&#x27;s Day Is In</text>
+<text x="60" y="1234" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1248" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1262" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1276" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1290" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1304" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1318" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1332" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1346" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1360" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve</text>
+<text x="40" y="1390" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">Independence Day Is In</text>
+<text x="60" y="1414" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1428" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1442" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1456" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1470" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1484" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1498" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1512" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1526" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1540" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="40" y="1570" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">Labor Day Is In</text>
+<text x="60" y="1594" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1608" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1622" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1636" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1650" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1664" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1678" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1692" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1706" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1720" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1734" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1748" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1762" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve</text>
+<text x="40" y="1792" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">Halloween Is In</text>
+<text x="60" y="1816" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1830" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1844" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1858" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1872" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1886" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1900" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1914" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1928" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1942" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1956" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1970" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1984" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="1998" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="2012" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="40" y="2042" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">Veterans Day Is In</text>
+<text x="60" y="2066" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve</text>
+<text x="40" y="2096" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">Thanksgiving Is In</text>
+<text x="60" y="2120" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="40" y="2150" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">Christmas Eve Is In</text>
+<text x="60" y="2174" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="2188" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="40" y="2218" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">Christmas Day Is In</text>
+<text x="60" y="2242" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="2256" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="2270" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve</text>
+<text x="40" y="2300" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">New Year&#x27;s Eve Is In</text>
+<text x="60" y="2324" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="2338" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve eve</text>
+<text x="60" y="2352" font-family="Consolas, monospace" font-size="11" fill="#9aa4bf">eve eve eve eve eve eve eve eve</text>
 </svg>

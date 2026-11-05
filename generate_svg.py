@@ -17,7 +17,6 @@ TARGET = os.path.join(HERE, "index.svg")
 
 
 def build_svg() -> str:
-    # Import locally so regeneration picks up code changes.
     import importlib.util
     spec = importlib.util.spec_from_file_location("eve", os.path.join(HERE, "eve.py"))
     eve = importlib.util.module_from_spec(spec)
@@ -26,7 +25,6 @@ def build_svg() -> str:
     report = eve.build_report()
     lines = report.splitlines()
 
-    # Build text lines for SVG (each holiday on its own line group).
     y = 80
     text_nodes = []
     for line in lines:
@@ -35,7 +33,6 @@ def build_svg() -> str:
             f'<text x="40" y="{y}" font-family="Segoe UI, sans-serif" font-size="18" fill="#7aa2ff" font-weight="bold">{html.escape(name)} Is In</text>'
         )
         y += 24
-        # wrap eves roughly
         words = eves.split()
         chunk = []
         cur_y = y
@@ -54,29 +51,25 @@ def build_svg() -> str:
             cur_y += 14
         y = cur_y + 16
 
-    height = y + 40
-
-    # Embed the full HTML page inside the SVG via foreignObject for "everything in one file".
-    html_path = os.path.join(HERE, "index.html")
-    html_content = ""
-    if os.path.exists(html_path):
-        with open(html_path, "r", encoding="utf-8") as f:
-            html_content = f.read()
-    # Make it XML-compatible for embedding in foreignObject.
-    html_content = html_content.replace("<!DOCTYPE html>", "").strip()
-    if html_content.lower().startswith("<?xml"):
-        html_content = html_content.split("?>", 1)[-1].strip()
+    height = max(y + 40, 1000)
 
     svg = f'''<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xhtml="http://www.w3.org/1999/xhtml"
-     width="100%" height="100%" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="100%" height="100%" viewBox="0 0 1000 {height}" preserveAspectRatio="xMidYMid meet">
   <title>Eve - Holidays in Eves</title>
-  <rect width="100%" height="100%" fill="#0b0f1a"/>
-  <foreignObject x="0" y="0" width="100%" height="100%">
-    <xhtml:div style="width:100%;height:100%;overflow:auto;">{html_content}</xhtml:div>
-  </foreignObject>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a2340"/>
+      <stop offset="100%" stop-color="#0b0f1a"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bg)"/>
+  <text x="40" y="40" font-family="Segoe UI, sans-serif" font-size="28" fill="#ffffff" font-weight="bold">EVE</text>
+  <text x="40" y="62" font-family="Segoe UI, sans-serif" font-size="13" fill="#9aa4bf">All the holidays, but days away are shown as that many eves.</text>
+  {chr(10).join(text_nodes)}
 </svg>
 '''
+    return svg
     return svg
 
 
